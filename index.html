@@ -1,0 +1,469 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Краеведческий портал Кижингинского района Республики Бурятия: история, природа, люди и достопримечательности.">
+  <meta name="theme-color" content="#0b3026">
+  <title>Кижингинский район — земля, где оживает история</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%23d6ad61'/%3E%3Ctext x='32' y='45' text-anchor='middle' font-family='Georgia' font-size='38' font-weight='700' fill='%23082820'%3EК%3C/text%3E%3C/svg%3E">
+  <style>
+    :root {
+      --forest: #123d32;
+      --forest-deep: #082820;
+      --forest-soft: #1d5848;
+      --cream: #f5f1e8;
+      --paper: #fffdf8;
+      --ink: #17382f;
+      --muted: #60736a;
+      --sand: #d6ad61;
+      --sand-light: #f0dfb5;
+      --sky: #9fd7df;
+      --line: rgba(18, 61, 50, .14);
+      --shadow: 0 24px 70px rgba(3, 26, 20, .18);
+      --radius: 24px;
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      color: var(--ink);
+      font-family: Manrope, Arial, sans-serif;
+      background: var(--forest-deep);
+      line-height: 1.7;
+      overflow-x: hidden;
+    }
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      z-index: -2;
+      background: url("image/fone.png") center / cover no-repeat;
+    }
+    body::after {
+      content: "";
+      position: fixed;
+      inset: 0;
+      z-index: -1;
+      background: linear-gradient(120deg, rgba(5, 30, 23, .96), rgba(14, 69, 54, .84) 52%, rgba(4, 29, 23, .95));
+    }
+    a { color: inherit; text-decoration: none; }
+    img { max-width: 100%; display: block; }
+    :focus-visible { outline: 3px solid var(--sand); outline-offset: 4px; }
+    .skip-link {
+      position: fixed;
+      z-index: 10;
+      top: 10px;
+      left: 10px;
+      padding: 9px 14px;
+      color: var(--forest-deep);
+      background: var(--sand-light);
+      border-radius: 8px;
+      transform: translateY(-150%);
+    }
+    .skip-link:focus { transform: translateY(0); }
+
+    .page { width: min(1260px, calc(100% - 48px)); margin: 0 auto; padding: 20px 0 50px; }
+    .topbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+      min-height: 60px;
+      margin-bottom: 22px;
+      color: #fff;
+    }
+    .brand { display: inline-flex; align-items: center; gap: 12px; font-size: 14px; font-weight: 800; letter-spacing: .02em; }
+    .brand-mark {
+      display: grid;
+      width: 40px;
+      height: 40px;
+      place-items: center;
+      color: var(--forest-deep);
+      font-family: "Playfair Display", Georgia, serif;
+      font-size: 23px;
+      background: var(--sand);
+      border-radius: 12px 4px 12px 4px;
+      box-shadow: 0 6px 18px rgba(0,0,0,.2);
+    }
+    .topbar-note { color: rgba(255,255,255,.7); font-size: 11px; letter-spacing: .12em; text-transform: uppercase; }
+
+    .layout { display: grid; grid-template-columns: minmax(0, 1fr) 270px; gap: 26px; align-items: start; }
+    .main { min-width: 0; width: 100%; }
+    .card {
+      position: relative;
+      overflow: hidden;
+      width: 100%;
+      margin-bottom: 26px;
+      padding: clamp(25px, 4vw, 48px);
+      border: 1px solid rgba(255,255,255,.65);
+      border-radius: var(--radius);
+      background: var(--paper);
+      box-shadow: var(--shadow);
+      scroll-margin-top: 22px;
+    }
+    .card::before { content: ""; position: absolute; top: 0; left: 0; width: 100%; height: 5px; background: linear-gradient(90deg, var(--sand), var(--sky), var(--forest-soft)); }
+
+    .hero {
+      min-height: 545px;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      background: linear-gradient(180deg, rgba(255,253,248,.18), rgba(255,253,248,.98) 65%), url("images/nature.jpg") center / cover;
+    }
+    .eyebrow, .section-kicker { color: #9b783b; font-size: 11px; font-weight: 800; letter-spacing: .2em; text-transform: uppercase; }
+    .eyebrow { margin-bottom: 18px; }
+    h1, h2, h3, p { margin-top: 0; }
+    h1 { max-width: 760px; margin-bottom: 20px; color: var(--forest); font-family: "Playfair Display", Georgia, serif; font-size: clamp(42px, 7vw, 84px); line-height: .98; letter-spacing: -.045em; text-transform: uppercase; }
+    h1 em { color: #aa8240; font-style: normal; }
+    .hero-copy { max-width: 670px; margin-bottom: 24px; color: #4c6359; font-size: 14px; line-height: 1.9; }
+    .hero-actions { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 27px; }
+    .button { display: inline-flex; align-items: center; justify-content: center; min-height: 44px; padding: 10px 17px; border: 1px solid var(--forest); border-radius: 8px; color: #fff; background: var(--forest); font-size: 12px; font-weight: 800; transition: transform .2s ease, background .2s ease; }
+    .button:hover { transform: translateY(-2px); background: var(--forest-soft); }
+    .button.secondary { color: var(--forest); background: transparent; border-color: rgba(18,61,50,.3); }
+    .button.secondary:hover { background: #eef3ed; }
+    .hero-meta { display: flex; align-items: center; gap: 13px; color: var(--forest); font-size: 11px; font-weight: 800; letter-spacing: .13em; text-transform: uppercase; }
+    .hero-meta::before { content: ""; width: 52px; height: 3px; background: var(--sand); }
+
+    .section-kicker { margin-bottom: 10px; }
+    h2 { margin-bottom: 12px; color: var(--forest); font-size: clamp(25px, 3.7vw, 40px); line-height: 1.16; letter-spacing: -.045em; }
+    h3 { margin: 27px 0 10px; color: var(--forest); font-size: 16px; line-height: 1.35; }
+    .rule { width: 68px; height: 4px; margin: 20px 0 25px; border-radius: 99px; background: var(--sand); }
+    .card p, .card li { color: #586c63; font-size: 14px; line-height: 1.9; }
+    .card strong { color: var(--forest); }
+    .lead { max-width: 720px; font-size: 16px !important; }
+
+    .quick-facts { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-top: 25px; }
+    .fact { padding: 17px; border: 1px solid var(--line); border-radius: 14px; background: #f3f6f0; }
+    .fact b { display: block; color: var(--forest); font-size: 20px; line-height: 1.25; }
+    .fact span { display: block; margin-top: 5px; color: var(--muted); font-size: 11px; line-height: 1.45; }
+
+    .media-layout { display: grid; grid-template-columns: minmax(220px, .8fr) minmax(0, 1.2fr); gap: 30px; align-items: start; }
+    .media-layout.reverse { grid-template-columns: minmax(0, 1.2fr) minmax(220px, .8fr); }
+    .media-layout.reverse .visual { order: 2; }
+    .visual { position: relative; min-height: 275px; overflow: hidden; border: 5px solid #eee6d5; border-radius: 18px; background: linear-gradient(135deg, var(--forest-soft), #8dbfc6); box-shadow: 0 14px 32px rgba(14, 59, 47, .16); }
+    .visual::after { content: attr(data-label); position: absolute; right: 15px; bottom: 12px; color: rgba(255,255,255,.85); font-size: 10px; font-weight: 800; letter-spacing: .14em; text-transform: uppercase; text-shadow: 0 1px 5px rgba(0,0,0,.4); }
+    .visual img { width: 100%; height: 100%; min-height: 275px; object-fit: cover; }
+    .visual.image-fallback { display: grid; place-items: center; }
+    .visual.image-fallback::before { content: "Изображение временно недоступно"; padding: 20px; color: rgba(255,255,255,.9); font-family: "Playfair Display", Georgia, serif; font-size: 20px; text-align: center; }
+    .visual.image-fallback img { display: none; }
+    .map-image { height: 520px; object-fit: contain !important; object-position: center; padding: 12px; background: #f3f1e9; }
+
+    .attraction-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 18px; }
+    .attraction-card { overflow: hidden; border: 1px solid rgba(18,61,50,.1); border-radius: 16px; background: #f4f7f2; transition: transform .25s ease, box-shadow .25s ease; }
+    .attraction-card:hover { transform: translateY(-4px); box-shadow: 0 12px 28px rgba(14,59,47,.14); }
+    .attraction-image { position: relative; height: 205px; overflow: hidden; background: linear-gradient(135deg, var(--forest-soft), #8dbfc6); }
+    .attraction-image img { width: 100%; height: 100%; object-fit: cover; }
+    .attraction-image.image-fallback { display: grid; place-items: center; }
+    .attraction-image.image-fallback::before { content: "Фотография скоро появится"; color: rgba(255,255,255,.9); font-size: 12px; font-weight: 700; letter-spacing: .08em; text-align: center; text-transform: uppercase; }
+    .attraction-image.image-fallback img { display: none; }
+    .attraction-body { padding: 18px 18px 20px; }
+    .attraction-body h3 { margin: 0 0 8px; font-size: 15px; }
+    .attraction-body p { margin: 0; font-size: 12.5px; line-height: 1.75; }
+    .tag { display: inline-block; margin-bottom: 9px; padding: 4px 8px; border-radius: 99px; color: #80642e; background: var(--sand-light); font-size: 10px; font-weight: 800; letter-spacing: .06em; text-transform: uppercase; }
+    details { margin-top: 10px; }
+    details summary { cursor: pointer; color: var(--forest); font-size: 12px; font-weight: 800; }
+    details p { padding-top: 8px; }
+
+    .info-list { margin: 0; padding: 0; list-style: none; }
+    .info-list li { position: relative; padding: 0 0 13px 25px; }
+    .info-list li::before { content: ""; position: absolute; top: 11px; left: 2px; width: 8px; height: 8px; border-radius: 50%; background: var(--sand); box-shadow: 0 0 0 4px rgba(214,173,97,.18); }
+    .stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin: 26px 0; }
+    .stat { padding: 18px 12px; border-radius: 14px; background: #f3f6f0; text-align: center; border-bottom: 3px solid var(--sand); }
+    .stat b { display: block; color: var(--forest); font-size: 22px; line-height: 1.2; }
+    .stat span { display: block; margin-top: 7px; color: var(--muted); font-size: 10px; line-height: 1.4; }
+    .visit-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; margin-top: 22px; }
+    .visit-item { padding: 18px; border-left: 3px solid var(--sand); background: #f7f5ed; }
+    .visit-item h3 { margin: 0 0 5px; font-size: 14px; }
+    .visit-item p { margin: 0; font-size: 12px; line-height: 1.65; }
+    .source-note { margin-top: 28px; padding: 16px 18px; border: 1px solid var(--line); border-radius: 12px; color: var(--muted); background: #faf8f1; font-size: 11px; line-height: 1.7; }
+
+    .sidebar { position: sticky; top: 22px; }
+    .nav-card { padding: 27px 20px 22px; border: 1px solid rgba(214,173,97,.8); border-radius: 20px; color: #fff; background: linear-gradient(155deg, #1b5a48, #082820); box-shadow: 0 20px 50px rgba(0,0,0,.28); }
+    .nav-card h2 { margin: 0 0 7px; color: var(--sand-light); font-size: 21px; letter-spacing: .04em; }
+    .nav-caption { margin-bottom: 20px; color: rgba(255,255,255,.62); font-size: 11px; letter-spacing: .12em; text-transform: uppercase; }
+    .nav-rule { width: 42px; height: 2px; margin-bottom: 20px; background: var(--sand); }
+    .nav-list { display: grid; gap: 9px; margin: 0; padding: 0; list-style: none; }
+    .nav-list a { display: flex; align-items: center; gap: 12px; min-height: 50px; padding: 12px 11px; border: 1px solid transparent; border-radius: 10px; color: rgba(255,255,255,.92); font-size: 14px; font-weight: 700; line-height: 1.45; transition: .25s ease; }
+    .nav-list a:hover, .nav-list a:focus-visible { color: var(--forest-deep); background: var(--sand-light); border-color: var(--sand); transform: translateX(5px); outline: none; }
+    .nav-no { flex: 0 0 23px; color: var(--sand); font-size: 11px; }
+    .nav-bottom { margin-top: 22px; padding-top: 18px; border-top: 1px solid rgba(214,173,97,.28); text-align: center; }
+    .nav-bottom strong { display: block; color: var(--sand-light); font-family: "Playfair Display", Georgia, serif; font-size: 22px; }
+    .nav-bottom span { color: rgba(255,255,255,.62); font-size: 10px; }
+    footer { padding: 6px 0 0; color: rgba(255,255,255,.7); text-align: center; }
+    footer .line { width: 52px; height: 2px; margin: 0 auto 14px; background: var(--sand); }
+    footer p { margin: 0; font-size: 10px; letter-spacing: .14em; text-transform: uppercase; }
+    .mobile-nav-toggle {
+      display: none;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      width: 100%;
+      min-height: 44px;
+      padding: 10px 14px;
+      border: 1px solid rgba(214,173,97,.8);
+      border-radius: 10px;
+      color: var(--sand-light);
+      background: #123d32;
+      font: inherit;
+      font-size: 12px;
+      font-weight: 800;
+      cursor: pointer;
+    }
+    .mobile-nav-toggle::before { content: "☰"; font-size: 16px; }
+    .mobile-nav-toggle[aria-expanded="true"]::before { content: "×"; font-size: 21px; }
+    .back-to-top {
+      position: fixed;
+      right: 22px;
+      bottom: 22px;
+      z-index: 5;
+      display: grid;
+      width: 44px;
+      height: 44px;
+      place-items: center;
+      border: 1px solid var(--sand);
+      border-radius: 50%;
+      color: var(--forest-deep);
+      background: var(--sand-light);
+      box-shadow: 0 8px 24px rgba(0,0,0,.22);
+      font-size: 20px;
+      font-weight: 800;
+      opacity: 0;
+      pointer-events: none;
+      transform: translateY(10px);
+      transition: opacity .2s ease, transform .2s ease;
+    }
+    .back-to-top.is-visible { opacity: 1; pointer-events: auto; transform: translateY(0); }
+    .back-to-top:focus-visible { outline-offset: 3px; }
+
+    @media (max-width: 900px) {
+      .layout { grid-template-columns: minmax(0, 1fr) 220px; gap: 18px; }
+      .media-layout, .media-layout.reverse { grid-template-columns: 1fr; }
+      .media-layout.reverse .visual { order: 0; }
+      .visual, .visual img { min-height: 230px; }
+    }
+    @media (max-width: 700px) {
+      .page { width: min(100% - 28px, 620px); padding-top: 12px; }
+      .topbar { align-items: flex-start; margin-bottom: 14px; }
+      .topbar-note { display: none; }
+      .layout { display: flex; flex-direction: column; }
+      .sidebar { position: static; order: 0; width: 100%; }
+      .mobile-nav-toggle { display: flex; }
+      .nav-card { padding: 10px; }
+      .mobile-nav-toggle { padding: 8px 12px; }
+      .nav-card.is-open { padding: 20px; }
+      .nav-list { display: none !important; }
+      .nav-card.is-open .nav-list { display: grid !important; }
+      .nav-caption, .nav-rule, .nav-bottom, .nav-card h2 { display: none !important; }
+      .nav-card.is-open .nav-caption, .nav-card.is-open .nav-rule, .nav-card.is-open .nav-bottom, .nav-card.is-open h2 { display: block !important; }
+      .nav-card.is-open .mobile-nav-toggle { margin-bottom: 18px; }
+      .main { order: 1; }
+      .hero { min-height: 520px; }
+      .hero h1 { font-size: clamp(32px, 9.5vw, 40px); overflow-wrap: anywhere; }
+      .hero-copy { font-size: 13px; }
+      .hero-actions .button { flex: 1 1 150px; }
+      .nav-list { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .nav-list a { min-height: 44px; font-size: 12px; }
+      .back-to-top { right: 14px; bottom: 14px; }
+      .attraction-grid, .visit-grid { grid-template-columns: 1fr; }
+      .attraction-image { height: 230px; }
+      .map-image { height: 390px; padding: 8px; }
+      .quick-facts { grid-template-columns: 1fr; }
+      .stats { gap: 7px; }
+      .stat { padding: 14px 5px; }
+      .stat b { font-size: 17px; }
+      .stat span { font-size: 9px; }
+    }
+    @media (max-width: 390px) {
+      .nav-list { grid-template-columns: 1fr; }
+      .hero { min-height: 570px; }
+      h1 { font-size: 40px; }
+      .stats { grid-template-columns: 1fr; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+      *, *::before, *::after { transition-duration: .01ms !important; }
+    }
+  </style>
+</head>
+<body>
+  <a class="skip-link" href="#main-content">Перейти к содержанию</a>
+  <div class="page">
+    <header class="topbar">
+      <a class="brand" href="#top" aria-label="Кижингинский район — на главную">
+        <span class="brand-mark" aria-hidden="true">К</span>
+        <span>Кижингинский район</span>
+      </a>
+      <span class="topbar-note">Республика Бурятия · Западное Забайкалье</span>
+    </header>
+
+    <div class="layout" id="top">
+      <main class="main" id="main-content">
+        <section class="card hero" aria-labelledby="hero-title">
+          <div class="eyebrow">Краеведческий портал</div>
+          <h1 id="hero-title">Кижингинский <em>район</em></h1>
+          <p class="hero-copy">Сердце духовной Бурятии и край живописных степных долин. Здесь, под вечно синим небом, вековые традиции предков переплетаются с первозданной природой. Откройте для себя гостеприимную Кижингу — место, где оживает история и отдыхает душа.</p>
+          <div class="hero-actions">
+            <a class="button" href="#attractions">Что посмотреть</a>
+            <a class="button secondary" href="#visit">Спланировать поездку</a>
+          </div>
+          <div class="hero-meta">История · люди · природа</div>
+        </section>
+
+        <section class="card" id="history" aria-labelledby="history-title">
+          <div class="section-kicker">01 / История</div>
+          <h2 id="history-title">Район с характером и памятью</h2>
+          <div class="rule"></div>
+          <p class="lead"><strong>Кижингинский район</strong> (бур. Хэжэнгын аймаг) образован Указом Президиума Верховного Совета РСФСР 12 декабря 1940 года за счет разукрупнения Хоринского района. В его состав вошли семь сельсоветов.</p>
+          <p>В 1959 году район временно упразднили, а его территорию передали Хоринскому району. 30 декабря 1966 года Кижингинский район был восстановлен и с тех пор остается самостоятельной административно-территориальной единицей.</p>
+          <p>Сегодня это территория, где культурное наследие, буддийские традиции и сельский уклад складываются в особую атмосферу спокойствия и достоинства.</p>
+          <div class="quick-facts" aria-label="Коротко о районе">
+            <div class="fact"><b>1940</b><span>год образования района</span></div>
+            <div class="fact"><b>197 км</b><span>примерное расстояние до Улан-Удэ</span></div>
+            <div class="fact"><b>7 871 км²</b><span>площадь территории</span></div>
+          </div>
+        </section>
+
+        <section class="card" id="attractions" aria-labelledby="attractions-title">
+          <div class="section-kicker">02 / Наследие</div>
+          <h2 id="attractions-title">Достопримечательности</h2>
+          <div class="rule"></div>
+          <p>Кижингинский район объединяет буддийские святыни, памятники духовной истории, священные горы и целебные источники. Выберите место, чтобы узнать главное о нем.</p>
+
+          <h3>Буддийские святыни и архитектура</h3>
+          <div class="attraction-grid">
+            <article class="attraction-card">
+              <div class="attraction-image"><img src="images/datsan.jpg" alt="Кижингинский дацан Дэчен Даши Лхунболин" loading="lazy"></div>
+              <div class="attraction-body"><span class="tag">Дацан</span><h3>Кижингинский дацан</h3><p>«Дэчен Даши Лхунболин» основан в 1758 году и был одним из главных центров буддийского образования и книгопечатания в Забайкалье.</p><details><summary>Подробнее</summary><p>В 1930-е годы комплекс был разрушен, а в 1990-х возрожден на новом месте неподалеку от села Кижинга. Сегодня это действующий монастырь, где проводятся хуралы и хранятся почитаемые реликвии.</p></details></div>
+            </article>
+            <article class="attraction-card">
+              <div class="attraction-image"><img src="images/jarun-khashor.jpg" alt="Ступа Джарун Хашор" loading="lazy"></div>
+              <div class="attraction-body"><span class="tag">Архитектура</span><h3>Ступа Джарун Хашор</h3><p>Ступа Исполняющая желания построена рядом с Кижингинским дацаном как копия знаменитой непальской ступы Боднатх.</p><details><summary>Подробнее</summary><p>Первая ступа на этом месте появилась в 1919 году. Современное сооружение высотой около 33 метров восстановили в 2001 году. Вокруг нее совершают гороо — ритуальный обход по часовой стрелке.</p></details></div>
+            </article>
+            <article class="attraction-card">
+              <div class="attraction-image"><img src="images/om-mani-padme-hum.jpg" alt="Гигантская надпись Ом Мани Падмэ Хум" loading="lazy"></div>
+              <div class="attraction-body"><span class="tag">Священное место</span><h3>«Ом Мани Падмэ Хум»</h3><p>Монументальная священная мантра выложена белыми камнями на склоне горы в Среднекодунском сомоне.</p><details><summary>Подробнее</summary><p>Размеры букв позволяют увидеть надпись с большого расстояния и даже на спутниковых снимках. Место находится недалеко от улуса Улзытэ.</p></details></div>
+            </article>
+            <article class="attraction-card">
+              <div class="attraction-image"><img src="images/stupa-dandaron.jpg" alt="Ступа Дандарона" loading="lazy"></div>
+              <div class="attraction-body"><span class="tag">Память</span><h3>Ступа Дандарона</h3><p>Мемориальный субурган посвящен буддологу, тибетологу и духовному учителю Бидии Дандаровичу Дандарону.</p><details><summary>Подробнее</summary><p>Памятник служит местом памяти и почитания для его учеников, исследователей буддизма и местных жителей.</p></details></div>
+            </article>
+          </div>
+
+          <h3>Природные и священные места</h3>
+          <div class="attraction-grid">
+            <article class="attraction-card"><div class="attraction-image"><img src="images/chelsana.jpg.jpg" alt="Гора Челсана Буурал Баабай" loading="lazy"></div><div class="attraction-body"><span class="tag">Гора</span><h3>Гора Челсана (Буурал Баабай)</h3><p>Одна из почитаемых священных вершин Бурятии к северо-востоку от села Кижинга.</p><details><summary>Подробнее</summary><p>По местным верованиям, гора является обителью духа-хозяина местности Буурал Баабая. Паломники совершают обряд подношения «сэржэм».</p></details></div></article>
+            <article class="attraction-card"><div class="attraction-image"><img src="images/orot-arshan.jpg.jpg" alt="Оротский аршан" loading="lazy"></div><div class="attraction-body"><span class="tag">Источник</span><h3>Оротский аршан</h3><p>Целебный минеральный источник в живописной лесной местности неподалеку от села Орот.</p><details><summary>Подробнее</summary><p>Местные жители используют его воду для укрепления здоровья и бережно относятся к окружающей природе.</p></details></div></article>
+            <article class="attraction-card"><div class="attraction-image"><img src="images/ozero-khuzharta.jpg.jpg" alt="Озеро Хужарта" loading="lazy"></div><div class="attraction-body"><span class="tag">Озеро</span><h3>Озеро Хужарта</h3><p>Соленое минеральное озеро в окрестностях села Куорка, имеющее статус памятника природы.</p><details><summary>Подробнее</summary><p>Водоем известен лечебными грязями и рапой, которые традиционно применяются для оздоровления суставов и кожи.</p></details></div></article>
+            <article class="attraction-card"><div class="attraction-image"><img src="images/sarantinsky-istochnik.jpg" alt="Сарантинский источник" loading="lazy"></div><div class="attraction-body"><span class="tag">Источник</span><h3>Сарантинский источник</h3><p>Памятник природы регионального значения — выход чистых подземных вод в районе села Саранта.</p><details><summary>Подробнее</summary><p>Источник ценится за высокие вкусовые качества воды и важен для местной экосистемы.</p></details></div></article>
+          </div>
+        </section>
+
+        <section class="card" id="geography" aria-labelledby="geography-title">
+          <div class="section-kicker">03 / Природа</div>
+          <h2 id="geography-title">География больших пространств</h2>
+          <div class="rule"></div>
+          <img class="visual map-image" src="images/nature.jpg" alt="Природа Кижингинского района" loading="lazy">
+          <h3>Географическое положение и границы</h3>
+          <p>Кижингинский район находится в восточной части Бурятии, в Западном Забайкалье, примерно в 200 км к востоку от Улан-Удэ. На западе он граничит с Заиграевским районом, на севере — с Хоринским и Еравнинским районами Бурятии, а также с Петровск-Забайкальским районом Забайкальского края.</p>
+          <ul class="info-list"><li><strong>Площадь:</strong> около 7 871 км², или 787,1 тыс. гектаров.</li><li><strong>Административный центр:</strong> село Кижинга.</li></ul>
+          <h3>Рельеф, вода и климат</h3>
+          <p>Район имеет горно-котловинный характер. Средняя высота над уровнем моря составляет около 715 метров. Территорию пересекают горные хребты и межгорные долины.</p>
+          <p>Основные водные артерии — реки Худан протяженностью 252 км и Кижинга протяженностью 146 км. Климат резко континентальный: холодная малоснежная зима сменяется относительно жарким сухим летом.</p>
+          <h3>Природное наследие</h3>
+          <p>Значительную часть территории занимают таежные леса, межгорные луга и речные поймы. Здесь расположено Ермаковское бериллиевое месторождение, открытое в 1964 году.</p>
+        </section>
+
+        <section class="card" id="population" aria-labelledby="population-title">
+          <div class="section-kicker">04 / Люди</div>
+          <h2 id="population-title">Район держится на людях</h2>
+          <div class="rule"></div>
+          <div class="media-layout">
+            <div class="visual" data-label="Жители и культура"><img src="images/people.jpg" alt="Люди и культура Кижингинского района" loading="lazy"></div>
+            <div><p>В районе проживает <strong>14 081 человек</strong> (2025 год), все население — сельское. Около половины жителей сосредоточено в районном центре, селе Кижинга.</p><p>Основную часть населения составляют буряты и русские. Район объединяет 21 населенный пункт и сохраняет особую связь культурных и сельских традиций.</p></div>
+          </div>
+          <div class="stats"><div class="stat"><b>14 081</b><span>житель в 2025 году</span></div><div class="stat"><b>9</b><span>муниципальных образований</span></div><div class="stat"><b>21</b><span>населенный пункт</span></div></div>
+          <h3>Демографическая динамика</h3><p>В последние годы наблюдается плавное снижение числа жителей: с 14 278 человек в 2021 году до 14 170 в 2024 году и 14 081 в 2025 году.</p>
+        </section>
+
+        <section class="card" id="territory" aria-labelledby="territory-title">
+          <div class="section-kicker">05 / Территория</div>
+          <h2 id="territory-title">Хозяйство и путь вперед</h2>
+          <div class="rule"></div>
+          <img class="visual map-image" src="images/map.jpg" alt="Карта Кижингинского района" loading="lazy">
+          <h3>Административно-территориальное деление</h3>
+          <p>Кижингинский район Республики Бурятия занимает площадь 7 871 км². Деление включает 2 сельсовета и 7 сомонов, объединяющих 21 населенный пункт: 6 сел, 2 поселка и 13 улусов.</p>
+          <p><strong>Транспортная доступность:</strong> расстояние от села Кижинга до Улан-Удэ составляет около 197–200 км по автодороге. Ближайшие железнодорожные станции — в поселке Новоильинск и селе Бада.</p>
+          <h3>Экономика и хозяйство</h3><p>Основу экономики составляют сельское хозяйство и лесопромышленный комплекс.</p>
+          <ul class="info-list"><li><strong>Сельское хозяйство:</strong> КРС мясного и молочного направления, овцеводство, табунное коневодство, зерновые и кормовые культуры.</li><li><strong>Лесное хозяйство:</strong> земли лесного фонда занимают более 70% территории.</li><li><strong>Промышленность:</strong> переработка мяса и молока, производство хлеба.</li><li><strong>Туризм:</strong> этнографическое, паломническое и сельское направления.</li></ul>
+        </section>
+
+        <section class="card" id="visit" aria-labelledby="visit-title">
+          <div class="section-kicker">06 / В поездку</div>
+          <h2 id="visit-title">С чего начать знакомство</h2>
+          <div class="rule"></div>
+          <p class="lead">Кижинга подойдет тем, кто ищет спокойный маршрут, живую культуру и просторную природу. Сохраните этот короткий чек-лист перед поездкой.</p>
+          <div class="visit-grid">
+            <div class="visit-item"><h3>Маршрут</h3><p>Начните с села Кижинга, затем составьте маршрут к дацану, ступам и природным местам района.</p></div>
+            <div class="visit-item"><h3>Время</h3><p>Погода резко континентальная: учитывайте холодную зиму, сухое лето и перепады температур.</p></div>
+            <div class="visit-item"><h3>Уважение к месту</h3><p>В дацанах и у священных объектов соблюдайте местные правила, не шумите и не оставляйте мусор.</p></div>
+            <div class="visit-item"><h3>Подготовка</h3><p>Для поездок за пределы села заранее продумайте связь, воду, топливо и запасной вариант маршрута.</p></div>
+          </div>
+          <div class="source-note"><strong>О материалах:</strong> числа, даты и описания на странице требуют сверки с актуальными официальными данными района и местными краеведческими источниками перед публикацией в качестве справочника. Фотографии размещены как иллюстрации разделов.</div>
+        </section>
+      </main>
+
+      <aside class="sidebar">
+        <nav class="nav-card" aria-label="Навигация по разделам">
+          <h2>Навигация</h2>
+          <button class="mobile-nav-toggle" type="button" aria-expanded="false" aria-controls="section-navigation">Открыть разделы</button>
+          <div class="nav-caption">Исследуйте наш край</div>
+          <div class="nav-rule"></div>
+          <ul class="nav-list" id="section-navigation">
+            <li><a href="#history"><span class="nav-no">01</span> История</a></li>
+            <li><a href="#attractions"><span class="nav-no">02</span> Достопримечательности</a></li>
+            <li><a href="#geography"><span class="nav-no">03</span> География</a></li>
+            <li><a href="#population"><span class="nav-no">04</span> Население</a></li>
+            <li><a href="#territory"><span class="nav-no">05</span> Территория и хозяйство</a></li>
+            <li><a href="#visit"><span class="nav-no">06</span> В поездку</a></li>
+          </ul>
+          <div class="nav-bottom"><strong>Кижинга</strong><span>Земля традиций и гостеприимства</span></div>
+        </nav>
+      </aside>
+    </div>
+
+    <footer><div class="line"></div><p>Краеведческий портал <b>«Кижингинский район»</b></p></footer>
+  </div>
+    <a class="back-to-top" href="#top" aria-label="Вернуться наверх">↑</a>
+  <script>
+    const navCard = document.querySelector('.nav-card');
+    const navToggle = document.querySelector('.mobile-nav-toggle');
+    const backToTop = document.querySelector('.back-to-top');
+
+    navToggle.addEventListener('click', () => {
+      const isOpen = navCard.classList.toggle('is-open');
+      navToggle.setAttribute('aria-expanded', String(isOpen));
+      navToggle.textContent = isOpen ? 'Закрыть разделы' : 'Открыть разделы';
+    });
+
+    document.querySelectorAll('.nav-list a').forEach((link) => {
+      link.addEventListener('click', () => {
+        navCard.classList.remove('is-open');
+        navToggle.setAttribute('aria-expanded', 'false');
+        navToggle.textContent = 'Открыть разделы';
+      });
+    });
+
+    window.addEventListener('scroll', () => {
+      backToTop.classList.toggle('is-visible', window.scrollY > 500);
+    }, { passive: true });
+
+    document.querySelectorAll('img').forEach((image) => {
+      image.addEventListener('error', () => image.parentElement.classList.add('image-fallback'), { once: true });
+    });
+  </script>
+</body>
+</html>
